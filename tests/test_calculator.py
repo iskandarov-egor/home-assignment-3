@@ -57,7 +57,6 @@ class CalculatorTestCase(unittest.TestCase):
         self.assertRaises(ValueError, calc, '12')
 
     def testTooManyOperators(self):
-        self.assertRaises(ValueError, calc, '1*2+3')
         self.assertRaises(ValueError, calc, '1*2-')
         self.assertRaises(ValueError, calc, '/1*2')
         self.assertRaises(ValueError, calc, '1//2')
