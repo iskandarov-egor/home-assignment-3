@@ -6,27 +6,39 @@ from calculator import calc
 
 class CalculatorTestCase(unittest.TestCase):
     def testAdd(self):
-        self.assertEquals(calc('101+202'), 303)
+        self.assertAlmostEqual(calc('101+202'), 303)
 
     def testSub(self):
-        self.assertEquals(calc('401-1'), 400)
+        self.assertAlmostEqual(calc('401-1'), 400)
 
     def testMult(self):
-        self.assertEquals(calc('2*1.5'), 3)
+        self.assertAlmostEqual(calc('2*1.5'), 3)
 
     def testDiv(self):
-        self.assertEquals(calc('3/1.5'), 2)
+        self.assertAlmostEqual(calc('3/1.5'), 2)
+        
+    def testAdd2(self):
+        self.assertAlmostEqual(calc('0.1+0.2'), 0.3)
+
+    def testSub2(self):
+        self.assertAlmostEqual(calc('0.3-0.1'), 0.2)
+
+    def testMult2(self):
+        self.assertAlmostEqual(calc('12*0.1'), 1.2)
+
+    def testDiv2(self):
+        self.assertAlmostEqual(calc('0.3/0.1'), 3)
 
     def testAbs(self):
-        self.assertEquals(calc('|10|'), 10)
-        self.assertEquals(calc('|-1.1|'), 1.1)
+        self.assertAlmostEqual(calc('|10|'), 10)
+        self.assertAlmostEqual(calc('|-1.1|'), 1.1)
 
     def testLeftZero(self):
-        self.assertEquals(calc('0100 + 04'), 104)
-        self.assertEquals(calc('|-01.1|'), 1.1)
+        self.assertAlmostEqual(calc('0100 + 04'), 104)
+        self.assertAlmostEqual(calc('|-01.1|'), 1.1)
 
     def testFloatForms(self):
-        self.assertEquals(calc('1.+.2'), 1.2)
+        self.assertAlmostEqual(calc('1.+.2'), 1.2)
 
     def testNotString(self):
         self.assertRaises(TypeError, calc, 4)
@@ -38,14 +50,14 @@ class CalculatorTestCase(unittest.TestCase):
         self.assertRaises(ZeroDivisionError, calc, '1/0')
 
     def testSpaces(self):
-        self.assertEquals(calc('   20   *  -  1.5   '), -30)
+        self.assertAlmostEqual(calc('   20   *  -  1.5   '), -30)
         self.assertRaises(ValueError, calc, '2  0 *-1.5')
-        self.assertEquals(calc('  |  -  10  |  '), 10)
+        self.assertAlmostEqual(calc('  |  -  10  |  '), 10)
         self.assertRaises(ValueError, calc, '|-1  0|')
 
     def testSigned(self):
-        self.assertEquals(calc('-4-+2'), -6)
-        self.assertEquals(calc('|+6|'), 6)
+        self.assertAlmostEqual(calc('-4-+2'), -6)
+        self.assertAlmostEqual(calc('|+6|'), 6)
 
     def testTooFewOperands(self):
         self.assertRaises(ValueError, calc, '/')
