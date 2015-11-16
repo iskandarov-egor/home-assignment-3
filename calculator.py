@@ -1,3 +1,5 @@
+from decimal import Decimal, InvalidOperation
+
 minus_replacement = 'm'
 plus_replacement = 'p'
 operators = '/*' + minus_replacement + plus_replacement
@@ -33,9 +35,12 @@ def bin_calc(s):
         raise ValueError()
 
     operator = s[operator_pos[0]]
-    left = float(s[:operator_pos[0]])
-    right = float(s[operator_pos[0] + 1:])
-
+    try:
+        left = Decimal(s[:operator_pos[0]])
+        right = Decimal(s[operator_pos[0] + 1:])
+    except InvalidOperation:
+        raise ValueError
+        
     if operator == plus_replacement:
         return left + right
     elif operator == minus_replacement:
@@ -60,6 +65,12 @@ def remove_spaces(s):
         raise ValueError
     return s.replace(' ', '')
 
+def abs_calc(s):
+    try:
+        number = Decimal(s)
+    except InvalidOperation:
+        raise ValueError
+    return abs(number)
 
 def calc(s):
     if not isinstance(s, basestring):
@@ -68,7 +79,7 @@ def calc(s):
         raise ValueError
     s = remove_spaces(s)
     if s[0] == '|' and s[-1] == '|':
-        return abs(float(s[1:-1]))
+        return abs_calc(s[1:-1])
     else:
         return bin_calc(s)
 
